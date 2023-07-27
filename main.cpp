@@ -1,7 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "tri.h"
+#include "cube.h"
 #include "shader_s.h"
 #include "camera.h"
 #include <iostream>
@@ -95,7 +95,7 @@ int main() {
 		shader.setMat4("view", view);
 		
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 		
 		glfwSwapBuffers(window);
 		glfwPollEvents();
