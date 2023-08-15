@@ -1,8 +1,14 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 #include "cube.h"
 #include "shader_s.h"
+#include "model.h"
+
 #include "camera.h"
 #include <iostream>
 
@@ -56,27 +62,29 @@ int main() {
 	}
 
 	unsigned int VBO;
-        unsigned int VAO;
+    unsigned int VAO;
 
-        glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO);
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
 
-        glBindVertexArray(VAO);
-        glBindBuffer(GL_ARRAY_BUFFER,VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(myVertices), myVertices, GL_STATIC_DRAW);
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER,VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(myVertices), myVertices, GL_STATIC_DRAW);
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
 
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)(3*sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-        glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
+
+	stbi_set_flip_vertically_on_load(true);
 
 	Shader shader("vertex.vs", "fragment.fs");
 	shader.use();
 
-	
+	Model model = Model(std::filesystem::path("model/Totodile/Totodile.fbx"));
 
 	while(!glfwWindowShouldClose(window)) {
 
@@ -96,9 +104,9 @@ int main() {
 		
 		glm::mat4 view = camera.GetViewMatrix();
 		shader.setMat4("view", view);
-		
-		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		model.Draw(shader);
+		//glBindVertexArray(VAO);
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
 		
 		glfwSwapBuffers(window);
 		glfwPollEvents();
