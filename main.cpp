@@ -84,7 +84,7 @@ int main() {
 	Shader shader("vertex.vs", "fragment.fs");
 	shader.use();
 
-	Model model = Model(std::filesystem::path("model/Totodile/Totodile.fbx"));
+	Model model = Model(std::filesystem::path("model/backpack/backpack.obj"));
 
 	while(!glfwWindowShouldClose(window)) {
 
