@@ -83,9 +83,7 @@ int main() {
 
 	Shader shader("vertex.vs", "fragment.fs");
 	shader.use();
-
-	Model model = Model(std::filesystem::path("model/backpack/backpack.obj"));
-
+	
 	while(!glfwWindowShouldClose(window)) {
 
 		float currentFrame = static_cast<float>(glfwGetTime());
@@ -104,9 +102,8 @@ int main() {
 		
 		glm::mat4 view = camera.GetViewMatrix();
 		shader.setMat4("view", view);
-		model.Draw(shader);
-		//glBindVertexArray(VAO);
-		//glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(VAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 		
 		glfwSwapBuffers(window);
 		glfwPollEvents();
