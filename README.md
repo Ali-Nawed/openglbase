@@ -1,1 +1,1 @@
-Base opengl setup for projects
+# openGLCmake
